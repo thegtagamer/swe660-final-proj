@@ -94,13 +94,14 @@ const options = {
 
   return (
     <div>
-      <h2>{title}</h2>
       {error ? (
         <p>Error: {error}</p>
       ) : trends.length === 0 ? (
         <p>Loading...</p>
       ) : (
-        <Line data={chartData} options={options} />
+        <div className="temp-graph">
+          <Line data={chartData} options={options} />
+        </div>
       )}
     </div>
   );

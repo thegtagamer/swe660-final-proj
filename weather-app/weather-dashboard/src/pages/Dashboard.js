@@ -6,10 +6,11 @@ import Footer from "../components/Footer";
 // import TodayChart from "../components/Charts/TodayChart";
 // import WeeklyChart from "../components/Charts/WeeklyChart";
 // import RealTimeData from "../components/RealTimeData";
-import LatestTemperature from "../components/LatestTemperature";
+// import LatestTemperature from "../components/LatestTemperature";
 import TodayTrends from "../components/TodayTrends";
 import TrendsGraph from "../components/TrendsGraph";
-import { FaTree, FaHome, FaCloud } from "react-icons/fa";
+import { FaTree, FaHome, FaRegSnowflake, FaSun } from "react-icons/fa";
+import DatePicker from "react-datepicker";
 import Card from "../components/Card/Card";
 import "./Dashboard.css"
 
@@ -18,6 +19,13 @@ import "./Dashboard.css"
 const Dashboard = () => {
   const [temperature, setTemperature] = useState(null);
   const [error, setError] = useState(null);
+  const [trend, setTrend] = useState('weekly');
+  const [date, setDate] = useState(new Date());
+  // const [startDate, setStartDate] = useState();
+  // const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState( new Date('2024-12-01T00:00:00'));
+  const [endDate, setEndDate] = useState( new Date('2024-12-07T23:59:59'));
+
 
   useEffect(() => {
     // Connect to the WebSocket
@@ -61,22 +69,21 @@ const Dashboard = () => {
       title: "Current Humidity",
       // subtitle: "",
       bgColor: "#28a745", // Green
-    }
-    // {
-    //   icon: <FaCloud size={40} color="#fff" />,
-    //   temperature: null,
-    //   humidity: null,
-    //   title: "Clear throughout the day",
-    //   subtitle: "Details on Forecast.io",
-    //   // bgColor: "#ffc107", // Yellow
-    // },
+    },
+    // Change conditions in below 
+    {
+      icon: 'sunny' ? <FaSun size={40} color="#fff" /> : <FaRegSnowflake size={40} color="#fff" />,
+      temperature: temperature && temperature.ttemperature || 'Loading',
+      title: "Tommorow Forecast",
+      subtitle: "Details on Forecast.io",
+      bgColor: "#ffc107", // Yellow
+    },
   ];
 
   return (
     <div>
       <Header />
 
-      <div className="cardSection">
       <div className="cards-container">
         {cardsData.map((card, index) => (
           <div
@@ -94,23 +101,54 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
-    </div>
-
 
       {/* <LatestTemperature /> */}
+
       <TodayTrends />
 
       <div>
-      <h1>Weather Trends Dashboard</h1>
-      <TrendsGraph apiUrl="http://localhost:9080/trends/weekly" title="Weekly Trends" />
-      <TrendsGraph apiUrl="http://localhost:9080/trends/monthly" title="Monthly Trends" />
-      <TrendsGraph apiUrl="http://localhost:9080/trends/yearly" title="Yearly Trends" />
-      <TrendsGraph
-        apiUrl="http://localhost:9080/trends/custom?start_date=2024-12-01T00:00:00&end_date=2024-12-07T23:59:59"
-        title="Custom Date Range Trends"
-      />
-    </div>
-
+        <h1 style={{ textAlign: 'center' }}>Weather Trends</h1>
+        <div className="trend-container">
+          <div className={trend === 'weekly' ? 'trend-tab active' : 'trend-tab'} onClick={() => setTrend('weekly')}>Weekly</div>
+          <div className={trend === 'monthly' ? 'trend-tab active' : 'trend-tab'} onClick={() => setTrend('monthly')}>Monthly</div>
+          <div className={trend === 'yearly' ? 'trend-tab active' : 'trend-tab'} onClick={() => setTrend('yearly')}>Yearly</div>
+          <div className={trend === 'custom' ? 'trend-tab active' : 'trend-tab'} onClick={() => setTrend('custom')}>Custom</div>
+        </div>
+        <div style={{ display: (trend === 'weekly' ? 'block' : 'none') }}>
+          <TrendsGraph apiUrl="http://localhost:9080/trends/weekly" />
+        </div>
+        <div style={{ display: (trend === 'monthly' ? 'block' : 'none') }}>
+          <TrendsGraph apiUrl="http://localhost:9080/trends/monthly" />
+        </div>
+        <div style={{ display: (trend === 'yearly' ? 'block' : 'none') }}>
+          <TrendsGraph apiUrl="http://localhost:9080/trends/yearly" />
+        </div>
+        <div style={{ display: (trend === 'custom' ? 'block' : 'none') }}>
+          <div className="custom-container">
+            <div>
+              <p>Start Date</p>
+              <DatePicker
+                selectsStart
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                startDate={startDate}
+              />
+            </div>
+            <div>
+              <p>End Date</p>
+              <DatePicker
+                selectsEnd
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                endDate={endDate}
+                startDate={startDate}
+                minDate={startDate}
+              />
+            </div>
+          </div>
+          <TrendsGraph apiUrl={`http://localhost:9080/trends/custom?start_date=` + startDate + `&end_date=` + endDate} />
+        </div>
+      </div>
 
       <Footer />
     </div>

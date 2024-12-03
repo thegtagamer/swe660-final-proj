@@ -1,19 +1,9 @@
-  .card-header h2 {
-    font-size: 2rem;
-    margin: 5px 0;
-  }
-  
-  .card-header p {
-    margin: 5px 0;
-    color: #fff;
-  }
-  
-  .card-footer {
-    border-radius: 4px;
-    background: #ffffff;
-    color: #000;
-    /* border-top: 1px solid #e0e0e0; */
-    padding: 4px;
-    font-size: 0.9rem;
-  }
-  
+.card h2 {
+  font-size: 3rem;
+  margin: 5px 0;
+}
+
+.card p {
+  margin: 5px 0;
+  color: #fff;
+}

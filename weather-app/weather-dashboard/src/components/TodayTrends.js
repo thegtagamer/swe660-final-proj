@@ -102,13 +102,15 @@ const TodayTrends = () => {
 
   return (
     <div>
-      <h2>Today's Temperature Trends</h2>
+      <h2 style={{ textAlign: 'center' }}>Today's Temperature Trends</h2>
       {error ? (
         <p>Error: {error}</p>
       ) : trends.length === 0 ? (
         <p>Loading trends...</p>
       ) : (
-        <Line key={JSON.stringify(chartData)} data={chartData} options={options} />
+        <div className="temp-graph">
+          <Line key={JSON.stringify(chartData)} data={chartData} options={options} />
+        </div>
       )}
     </div>
   );

@@ -4,20 +4,11 @@ import "./Card.css"; // Import custom CSS for card styling
 const Card = ({ icon, temperature, humidity, title, subtitle }) => {
   return (
     <div className="card">
-      <div className="card-header">
-        {icon}
-        
-        {temperature ?
-        
-      (<h2>{temperature}°</h2>): (<h2>{humidity}</h2>
-      )}
+      {icon}       
+      <h4>{title}</h4> 
+      {temperature ? (<h2>{temperature}°</h2>): (<h2>{humidity}</h2> )}
+      <p>{subtitle}</p>
       </div>
-      <h4>{title}</h4>
-      {/* <p>{subtitle}</p> */}
-  
-      </div>
-   
-
   );
 };
 
