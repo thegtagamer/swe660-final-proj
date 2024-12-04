@@ -67,8 +67,8 @@ const TodayTrends = () => {
         tension: 0.4,
       },
       {
-        label: "Feels Like (°C)",
-        data: trends.map((entry) => entry.feels_like),
+        label: "Humidity (%)",
+        data: trends.map((entry) => entry.humidity),
         borderColor: "rgba(255, 99, 132, 1)",
         backgroundColor: "rgba(255, 99, 132, 0.2)",
         fill: true,
@@ -94,7 +94,7 @@ const TodayTrends = () => {
       y: {
         title: {
           display: true,
-          text: "Temperature (°C)",
+          text: "Temperature (°C) and Humidity (%)",
         },
       },
     },
@@ -102,7 +102,7 @@ const TodayTrends = () => {
 
   return (
     <div>
-      <h2 style={{ textAlign: 'center' }}>Today's Temperature Trends</h2>
+      <h2 style={{ textAlign: "center" }}>Today's Temperature and Humidity Trends</h2>
       {error ? (
         <p>Error: {error}</p>
       ) : trends.length === 0 ? (

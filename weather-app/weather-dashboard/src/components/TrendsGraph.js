@@ -40,6 +40,7 @@ const chartData = {
       backgroundColor: "rgba(75, 192, 192, 0.2)",
       fill: true,
       tension: 0.4,
+      yAxisID: "y",
     },
     {
       label: "Min Temperature (°C)",
@@ -48,6 +49,7 @@ const chartData = {
       backgroundColor: "rgba(54, 162, 235, 0.2)",
       fill: true,
       tension: 0.4,
+      yAxisID: "y",
     },
     {
       label: "Max Temperature (°C)",
@@ -56,8 +58,36 @@ const chartData = {
       backgroundColor: "rgba(255, 99, 132, 0.2)",
       fill: true,
       tension: 0.4,
+      yAxisID: "y",
     },
-  ],
+    {
+      label: "Avg Humidity (%)",
+      data: trends.map((entry) => entry.avg_humidity),
+      borderColor: "rgba(153, 102, 255, 1)",
+      backgroundColor: "rgba(153, 102, 255, 0.2)",
+      fill: true,
+      tension: 0.4,
+      yAxisID: "y1", // Secondary Y-axis for humidity
+    },
+    {
+      label: "Min Humidity (%)",
+      data: trends.map((entry) => entry.min_humidity),
+      borderColor: "rgba(255, 159, 64, 1)",
+      backgroundColor: "rgba(255, 159, 64, 0.2)",
+      fill: true,
+      tension: 0.4,
+      yAxisID: "y1", // Secondary Y-axis for humidity
+    },
+    {
+      label: "Max Humidity (%)",
+      data: trends.map((entry) => entry.max_humidity),
+      borderColor: "rgba(201, 203, 207, 1)",
+      backgroundColor: "rgba(201, 203, 207, 0.2)",
+      fill: true,
+      tension: 0.4,
+      yAxisID: "y1", // Secondary Y-axis for humidity
+    },
+  ]
 };
 
 const options = {
@@ -71,14 +101,7 @@ const options = {
     x: {
       title: {
         display: true,
-        text:
-          labelKey === "day"
-            ? "Day (YYYY-MM-DD)"
-            : labelKey === "week"
-            ? "Week (Year)"
-            : labelKey === "month"
-            ? "Month (YYYY-MM)"
-            : "Time",
+        text: "Day",
       },
     },
     y: {
@@ -86,9 +109,21 @@ const options = {
         display: true,
         text: "Temperature (°C)",
       },
+      position: "left",
+    },
+    y1: {
+      title: {
+        display: true,
+        text: "Humidity (%)",
+      },
+      position: "right",
+      grid: {
+        drawOnChartArea: false, // Prevent gridlines overlapping with the left y-axis
+      },
     },
   },
 };
+
 
 
 

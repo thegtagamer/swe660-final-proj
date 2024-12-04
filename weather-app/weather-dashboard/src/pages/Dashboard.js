@@ -73,7 +73,7 @@ const Dashboard = () => {
     // Change conditions in below 
     {
       icon: 'sunny' ? <FaSun size={40} color="#fff" /> : <FaRegSnowflake size={40} color="#fff" />,
-      temperature: temperature && temperature.ttemperature || 'Loading',
+      temperature: temperature && temperature.temperature || 'Loading',
       title: "Tommorow Forecast",
       subtitle: "Details on Forecast.io",
       bgColor: "#ffc107", // Yellow
